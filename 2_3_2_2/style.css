@@ -108,3 +108,20 @@ header ul li a.active {
   border: 1px solid #111;
   transition: 0.4s ease;
 }
+
+@media only screen and (max-width: 768px) and (min-width: 321px)  {
+  * {
+    max-width: 96%;
+  }
+
+  header ul li {
+    margin-left: 0px;
+  }
+  header ul {
+    width: 59%;
+  }
+  header {
+    flex-wrap: wrap;
+    width: 100%
+  }
+}
