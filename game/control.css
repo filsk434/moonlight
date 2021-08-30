@@ -1,0 +1,68 @@
+* {
+
+  box-sizing:border-box;
+  margin:50;
+  padding:0;
+
+}
+  
+  html, body {
+  
+    height:100%;
+    width:100%;
+  
+  }
+  
+  body {
+    background-color:#202830;
+    color:#ffffff;
+    display:grid;
+    justify-content:center;
+  
+  }
+
+  .image {
+    margin-top: 5px;
+    max-width: 50px;
+    height: 100px;
+    background-size:cover;
+    background: url(car1.png) center,url(track.jpg) top center;
+    background-repeat: no-repeat;
+  }
+  
+  canvas {
+  
+    background-color:#ffffff;
+  
+  }
+
+  header {
+    top: 0;
+    left: 0;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+  
+  header ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  header ul li {
+    list-style: none;
+    margin-left: 20px;
+  }
+  header ul li a {
+    text-decoration: none;
+    padding: 6px 15px;
+    color: #fff;
+    border-radius: 20px;
+  }
+  header ul li a:hover,
+  header ul li a.active {
+    background:#fff;
+    color:#2b1055;
+  }
