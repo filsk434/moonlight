@@ -10,82 +10,12 @@
     <script src="animate.js" defer></script>
     <script src="shoot.js" defer></script>
     <link rel="stylesheet" href="style.css">
-    
-
-
-    <style>
-
-* {
-            margin:0;
-            padding:0;
-        }
-
-        html, body {
-            background-color: #0000;
-            height: 100%;
-            position: relative;
-            width: 100%;
-        }
-
-        canvas { 
-            height:100%;
-            position: fixed;
-            width: 100%;
-        }
-
-        button {
-            background-color: rgba(50,50,50,0.5);
-            position: absolute;
-            width: 40px;
-            height: 40px;
-        }
-
-        #container
-        {
-        height: 400px;
-        position: relative;
-        width: 400px;
-        }
-        #viewport
-        {
-        height: 100%;
-        width: 100%;
-        }
-        #up
-        {
-            bottom: 80px;
-            right: 40px;
-
-        }
-        #left
-        {
-            bottom: 40px;
-            right: 80px;
-        }
-        #down
-        {
-            bottom: 0px;
-            right: 40px;
-        }
-        #right
-        {
-            bottom: 40px;
-            right: 0px;
-        }
-        #action
-        {
-            bottom: 40px;
-            left: 40px;
-        }
-
-        
-    </style>
 </head>
 <body>
     <div id="container">
         <canvas id="viewport">
         </canvas>
-        <button id="up" ontouchstart="moveUp()">
+        <button id="up" onclick="moveUp()">
             ⬆
         </button>
         <button id="left" onclick="moveLeft()">
