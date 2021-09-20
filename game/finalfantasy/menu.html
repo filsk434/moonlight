@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+
+<style>
+
+    body{
+        /*background-image: url('http://i.stack.imgur.com/kx8MT.gif');*/
+        background-image: url("images/village.gif");
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100vh;
+        padding:0;
+        margin:0;
+    }
+
+    .container {
+        display:flex; /*Im a box1 Im a box2 Im a box3*/
+        /*flex-direction: row;  stackar boxar vid sidan*/
+        /*flex-direction: column;  stackar boxar ovanpå*/
+        /*flex-wrap: wrap;  wrap flyttar ner box när krockar*/
+        flex-flow: column wrap; /*samma som direction och wrap*/
+        justify-content: center; /*flyttar boxarna.*/
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 5%;
+        gap: 20px; /*only newer browser. gap between div*/
+    }
+
+    .box1:hover {
+        background-color: darkgoldenrod;
+    }
+    .box2:hover {
+        background-color: darkgoldenrod;
+    }
+    .box3:hover {
+        background-color: darkgoldenrod;
+    }
+    .box1 {
+        margin: 5px; /*padding on parent and margin on child same as gap*/
+        width:40vw;
+        background-color: rgba(255,0,0,0.5);
+        order:1;
+        color:white;
+    }
+    .box2 {
+        width:30vw;
+        background-color: rgba(0,255,0,0.5);
+        order:2;
+    }
+    .box3 {
+        background-color: rgba(0,0,255,0.5);
+        width:20vw;
+        order:3;
+    }
+    .box4 {
+        background-color: red;
+    }
+    p {
+       text-align: center;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="box0"></a></div>
+        <div class="box1"><p><a href="index.html">Start game</a></p> </div>
+        <div class="box2"><p> <a href="#"> How to play</a></p></div>
+        <div class="box3"><p><a href="#" class ="close">Exit</a></p></div>
+    </div>
+   </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <div class="stack" id="stack"><p id="text"></p></div>
+    <style>
+        .stack {
+            width: 400px;
+            height: 200px;
+            background-color: gray;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const mapings = [
+            [1],[2],[3],[4],[5]
+        ]
+        const map1 = [1];
+        const map2 = [2];
+        const map3 = [3];
+        const map4 = [4];
+        const content = document.getElementById('stack');
+
+        let currentMap = mapings[0];
+
+        function Queue() {
+            currentMap = mapings[+1];
+        }
+
+        function deQueue() {
+            currentMap = mapings[-1]
+        }
+
+        if(currentMap = map1) { //if player is on exit tile
+            currentMap = mapings[+1];
+            console.log(currentMap);
+        }
+        if(currentMap = map2) { //if player_index[currentMap]..
+            currentMap = mapings[+1];
+            console.log(currentMap);
+        }
+        if(currentMap = map3)
+        //Går 1->2->3->2->3
+        deQueue();
+        Queue();
+        deQueue();
+        Queue();
+        deQueue();
+        Queue();
+        deQueue();
+        Queue();
+        content.innerHTML = currentMap;
+    </script>
+</body>
+</html>
