@@ -618,5 +618,54 @@ context.canvas.addEventListener("click", (event) => {
 window.addEventListener("keypress", controller.keyListener);
 window.addEventListener("keydown", controller.keyListener);
 window.addEventListener("keyup", controller.keyListener);
-//window.requestAnimationFrame(loop);
 
+function touchHandlerU(e) {
+    if(e.touches) {
+        moveUp();
+        e.preventDefault();
+    }
+}
+function touchHandlerD(e) {
+    if(e.touches) {
+        moveDown();
+        e.preventDefault();
+    }
+}
+function touchHandlerL(e) {
+    if(e.touches) {
+        moveLeft();
+        e.preventDefault();
+    }
+}
+function touchHandlerR(e) {
+    if(e.touches) {
+        moveRight();
+        e.preventDefault();
+    }
+}
+function touchHandlerA(e) {
+    if(e.touches) {
+        shootArrow();
+        e.preventDefault();
+    }
+}
+
+var upTouch = document.getElementById("up");
+var downTouch = document.getElementById("down");
+var leftTouch = document.getElementById("left");
+var rightTouch = document.getElementById("right");
+var actionTouch = document.getElementById("action");
+upTouch.addEventListener("touchstart", touchHandlerU);
+upTouch.addEventListener("touchmove", touchHandlerU);
+
+downTouch.addEventListener("touchstart", touchHandlerD);
+downTouch.addEventListener("touchmove", touchHandlerD);
+
+leftTouch.addEventListener("touchstart", touchHandlerL);
+leftTouch.addEventListener("touchmove", touchHandlerL);
+
+rightTouch.addEventListener("touchstart", touchHandlerR);
+rightTouch.addEventListener("touchmove", touchHandlerR);
+
+actionTouch.addEventListener("touchstart", touchHandlerA);
+actionTouch.addEventListener("touchmove", touchHandlerA);
