@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="map.js" defer></script>
+    <script src="main.js" defer></script>
+    <script src="animate.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="ShowClassSelection()">
+
+    <header> 
+        <h1>Rogue game</h1>
+        <a href="#" class="logo"></a>
+        <ul>
+            <li><a href="../home/index.html">Home</a></li>
+            <li><a href="../about/index3.html">About</a></li>
+            <li><a href="../2_3_2_2/index2.html" class="active">Work</a></li>
+            <li><a href="../game/finalfantasy/menu.html">Adventure game</a></li>
+            <li><a href="../Rogue/index.html">Rogue game</a></li>
+        </ul>
+    </header>
+
+    <!-- Class Selection Screen -->
+    <div id="class-selection">
+        <h2>Select Your Class</h2>
+        <div class="class-container">
+            <div class="class-card" onclick="selectClass('archer')">
+                <img src="images/greenguyportrait.png" alt="Archer">
+                <h3>Archer</h3>
+            </div>
+            <div class="class-card" onclick="selectClass('mage')">
+                <img src="images/wizardportrait.png" alt="Mage">
+                <h3>Mage</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div id="upgrade-cards" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.7); padding: 20px; border-radius: 10px; color: white;">
+        <h2 style="text-align: center;">Choose Your Upgrade</h2>
+        <div class="upgrade-container">
+        </div>
+    </div>
+
+    <!-- Main Game Screen (hidden initially) -->
+    <div id="container" style="display: none;">
+        <canvas id="viewport" width="800" height="600"></canvas>
+        <button id="up" onclick="moveUp()">⬆</button>
+        <button id="left" onclick="moveLeft()">⬅</button>
+        <button id="right" onclick="moveRight()">➡</button>
+        <button id="down" onclick="moveDown()">⬇</button>
+        <button id="action" onclick="action()">💥</button>
+    </div>
+</body>
+</html>

@@ -14,6 +14,22 @@ var highscore = localStorage.getItem("highscore");
 var audio = new Audio('explosion.wav');
 audio.volume = 0.2;
 
+document.addEventListener("DOMContentLoaded", function () {
+  function addTouchSupport(id, callback) {
+      let button = document.getElementById(id);
+      button.addEventListener("click", callback);
+      button.addEventListener("touchstart", (e) => {
+          e.preventDefault(); // Prevent scrolling
+          callback();
+      }, { passive: false });
+  }
+
+  addTouchSupport("up", moveUp);
+  addTouchSupport("left", moveLeft);
+  addTouchSupport("right", moveRight);
+  addTouchSupport("down", moveDown);
+  addTouchSupport("action", action);
+});
 
 player = {
   height:30,

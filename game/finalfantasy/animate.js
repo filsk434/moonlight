@@ -7,7 +7,6 @@ function enemyAggro() {
         }
         //shootArrow(enemy3.x, enemy3.y);
         if(isCollide(player,enemy3)) {
-            console.log('die scum');
             player.hp -= 0.1;
         }
     }

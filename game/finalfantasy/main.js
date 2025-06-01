@@ -10,6 +10,7 @@ const Player = function(x,y,hp,maxHealth) {
     this.UpFacing = false;
     this.DownFacing = true;
     this.RightFacing = false;
+    this.speed = 2;
 }
 
 const Potion = function(x,y) {
@@ -75,42 +76,20 @@ var dog5 = new Dog(100,200,80,40);
 
 var pointer = { x:0, y:0};
 
-controller = {
-    KeyF:false,
-    space:false,
-    down:false,
-    left:false,
-    right:false,
-    up:false,
-    shot:false,
-    key_up:false,
-    keyListener:function(event) {
-        var key_down = (event.type == "keydown")?true:false;
-        if(event.type == "keyup") {
-            controller.shot = false;
-        }
-        switch(event.keyCode) {
-        
-        case 32://space key
-            controller.space = key_down;
-            console.log('x: ',player.x);
-            console.log('y: ',player.y);
-        break;
-        case 40:// down key
-            controller.down = key_down;
-        break;
-        case 37:// left key
-            controller.left = key_down;
-        break;
-        case 38:// up key
-            controller.up = key_down;
-        break;
-        case 39:// right key
-            controller.right = key_down;
-        break;
-        case 70://F key
-            controller.KeyF = key_down;
-        break;
+const controller = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    space: false,
+    keyListener(event) {
+        const isKeyDown = event.type === "keydown";
+        switch (event.keyCode) {
+            case 32: controller.space = isKeyDown; break;
+            case 37: controller.left = isKeyDown; break;
+            case 38: controller.up = isKeyDown; break;
+            case 39: controller.right = isKeyDown; break;
+            case 40: controller.down = isKeyDown; break;
         }
     }
 };
@@ -140,6 +119,11 @@ function healthBar(x,y,person) {
 
 var bullets = [];
 var bulletImg = new Image();
+var bulletImg_north = new Image();
+var bulletImg_east = new Image();
+var bulletImg_south = new Image();
+var bulletImg_west = new Image();
+
 var arrow_flying = false;
 var enemyHit = false;
 
@@ -208,10 +192,18 @@ function isCollide(a,b) {
 faceLeft = true;
 faceRight = false;
 
-var fps = 60;   /// NTSC
+let lastAnimUpdate = 0;
+let animInterval = 100;
+function updateAnimation() {
+    if(animateRight >= 32) {
+        animateRight = 0;
+    } else {
+        animateRight += 16;
+    }
+}
 
 function moveLeft() {
-    player.x -= 2;
+        player.x -= player.speed;
         animateDown = 36; //first row
         player.LeftFacing = true;
         player.RightFacing = false;
@@ -227,7 +219,7 @@ function moveLeft() {
 }
 
 function moveRight() {
-    player.x += 2;
+    player.x += player.speed;
         animateDown = 54; //first row
         player.LeftFacing = false;
         player.RightFacing = true;
@@ -243,7 +235,7 @@ function moveRight() {
 }
 
 function moveUp() {
-    player.y -= 2;
+    player.y -= player.speed;
         animateDown = 18; //first row
         player.LeftFacing = false;
         player.RightFacing = false;
@@ -259,7 +251,7 @@ function moveUp() {
 }
 
 function moveDown() {
-    player.y += 2;
+    player.y += player.speed;
         animateDown = 0; //first row
         player.LeftFacing = false;
         player.RightFacing = false;
@@ -276,6 +268,7 @@ function moveDown() {
 
 function action() {
     if(!controller.shot) {
+        console.log("shooting?");
         shootArrow(player.x, player.y);
     }
     controller.shot = true
@@ -286,7 +279,30 @@ function action() {
  * //START OF GAME LOOP
  * ******************************************************
  */
+
+var fps = 60;   /// NTSC
+
+let lastUpdateTime = performance.now();
+let frameDuration = 1000 / 10; // 6 frames per second
+let currentFrame = 0; // initialize the current frame to 0
+let maxFrame = 10; // set the maximum frame index
+
+
 function loop() {
+
+let currentTime = performance.now();
+let elapsed = currentTime - lastUpdateTime;
+let spriteWidth = 32; // the width of a single sprite frame
+let spriteHeight = 32; // the height of a single sprite frame
+let spriteSheetWidth = 320; // the width of the sprite sheet
+let spriteSheetHeight = 320; // the height of the sprite sheet
+let scaledSize = 42; // the size of the scaled sprite
+
+if (elapsed > frameDuration) {
+    // display the next frame
+    currentFrame = (currentFrame + 1) % maxFrame;
+        lastUpdateTime = currentTime;
+}
 
 setTimeout(() => {
     requestAnimationFrame(loop);
@@ -302,15 +318,31 @@ context.canvas.width = width;
 //make everything less pixelated
 context.imageSmoothingEnabled = false;
 
+
+// calculate the x and y coordinates of the current frame on the sprite sheet
+let frameX = (currentFrame % 10) * spriteWidth;
+let frameY = Math.floor(currentFrame / 10) * spriteHeight;
 let mapIndex = 0;
 let sourceX = 0;
 let sourceY = 0;
-for(let x = 0; x < columns2; x++) {
-    for(let y=0; y< rows2; y++) {
-        let tileVal = currentMap[y*columns +x];
-        sourceY = Math.floor(tileVal/columns2) * 32;
-        sourceX = (tileVal % columns2) * 32;
-        context.drawImage(tile_sheet5,sourceX,sourceY, 32, 32, x*42,y*42, scaled_size,scaled_size);
+let spriteSheet = new Image();
+spriteSheet.src = 'images/tiles.png';
+
+// Draw each tile in the current map
+for (let y = 0; y < rows2; y++) {
+    for (let x = 0; x < columns2; x++) {
+        let tileVal = currentMap[y * columns2 + x]; // Get tile value from currentMap
+
+        // Calculate sourceX and sourceY based on tileVal
+        sourceX = (tileVal % columns2) * spriteWidth;
+        sourceY = Math.floor(tileVal / columns2) * spriteHeight;
+
+        // Draw the tile at the scaled position on the canvas
+        context.drawImage(
+            spriteSheet,
+            sourceX, sourceY, spriteWidth, spriteHeight, // Source rectangle
+            x * scaledSize, y * scaledSize, scaledSize, scaledSize // Destination rectangle
+        );
     }
 }
 //20 * 8
@@ -609,7 +641,10 @@ tile_sheet4.src = "images/green-guy.png";
 tile_sheet5.src = "images/tiles.png";
 tile_sheet6.src = "images/dog.png";
 tile_sheet7.src = "images/bow (2).png";
-bulletImg.src = "images/arrow (1).png";
+bulletImg_north.src = "images/arrow_north.png";
+bulletImg_east.src = "images/arrow_east.png";
+bulletImg_south.src = "images/arrow_south.png";
+bulletImg_west.src = "images/arrow_west.png";
 
 context.canvas.addEventListener("click", (event) => {
     pointer.x = event.pageX;
@@ -645,6 +680,7 @@ function touchHandlerR(e) {
 }
 function touchHandlerA(e) {
     if(e.touches) {
+        console.log("shot");
         shootArrow();
         e.preventDefault();
     }

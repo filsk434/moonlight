@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src = "script.js" type = "text/javascript"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"></a>
+        <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="../about/index3.html">About</a></li>
+            <li><a href="../2_3_2_2/index2.html">Work</a></li>
+            <li><a href="../game/finalfantasy/menu.html">Adventure game</a></li>
+            <li><a href="../Rogue/index.html">Rogue game</a></li>
+        </ul>
+    </header>
+    <section>
+        <img src="img/sky.jpg" id="sky" alt="">
+        <img src="img/death_star2.png" id="moon" alt="">
+        <img src="img/birds.png" alt="ewok" id="mountains_behind">
+     <!--   <img src="img/forest_behind.png" id="mountains_behind" alt=""> -->
+        <h2 id="text"> Good Morning <br time() >  Beautiful</h2>
+        <button onclick="time()">Calculate</button>
+      <!--  <a href="#sec" id="btn">Explore</a>-->
+        <img src="img/forest_front.png" id="mountains_front" alt="">
+    </section>
+    <div class="sec" id="sec">
+        <h2>My Journey</h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non consequatur quas fugit quae! Aperiam magni quidem fuga veniam quasi labore expedita ex nulla? Ducimus, odio. Minus facere repudiandae eaque repellat!
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores rerum in deserunt reiciendis tempore quae, quisquam nisi hic veritatis. Esse adipisci sunt animi repellat atque dolores aut sed unde eaque.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, esse. Labore, officiis? Magnam officiis natus officia mollitia est, architecto eum sunt! Voluptatum nihil sit explicabo dolorum? Deleniti doloremque architecto vero.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae architecto numquam fugiat provident iste aliquam sit harum! Animi commodi non, nesciunt, facilis facere quis recusandae voluptates quidem adipisci tempora laboriosam.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque, perspiciatis necessitatibus voluptatum totam rem dolorem suscipit voluptates iure odit quia iste. Expedita esse iste tenetur rem odit earum, ipsum laborum.
+            <br><br>
+        </p>
+    </div>
+    <script>
+        let sky = document.getElementById('sky');
+        let moon = document.getElementById('moon');
+        let mountains_behind = document.getElementById('mountains_behind');
+        let mountains_front = document.getElementById('mountains_front');
+        let text = document.getElementById('text');
+        let btn = document.getElementById('btn');
+        let header = document.querySelector('header');
+
+        window.addEventListener('scroll', function() {
+            let value = window.scrollY;
+            sky.style.top = value * 0.25 + 'px';
+            moon.style.top = value * 1.05 + 'px';
+            mountains_behind.style.left = value * -2.5 + 'px';
+        //    mountains_front.style.marginLeft = value * 4 + 'px';
+            text.style.marginRight = value * 4 + 'px';
+            text.style.marginTop = value * 1.5 + 'px';
+            header.style.top = value * 0.5 + 'px';
+        })
+    </script>
+</body>
+</html>

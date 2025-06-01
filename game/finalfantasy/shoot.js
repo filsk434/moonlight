@@ -1,89 +1,93 @@
 function getAngle() {
-    if(player.RightFacing) {
+    let angle = 0;
+    if (player.RightFacing) {
         angle = 0;
-    }
-    if(player.UpFacing) {
-        angle = 270; //it works..
-    }
-    if(player.LeftFacing) {
+    } else if (player.UpFacing) {
+        angle = 270;
+    } else if (player.LeftFacing) {
         angle = 180;
-    }
-
-    if(player.DownFacing) {
-        angle = 90; //it works..
+    } else if (player.DownFacing) {
+        angle = 90;
     }
     return angle;
 }
 
-//Unit shoot
-function shootArrow(unitX,unitY) {
-    console.log('pew');
-    drawBullet(unitX,unitY);
+// Unit shoot
+function shootArrow() {
+    // Set angle based on the player's facing direction
+    let angle = getAngle();
+    drawBullet(player.x, player.y, angle);
 }
 
-function newBullet(x, y, speed, angle, id, type) {
-    this.x = x + player.height /2;
-    this.y = y + player.width/2;
+function newBullet(x, y, speed, angle) {
+    this.x = x + player.width / 2;
+    this.y = y + player.height / 2;
     this.speed = speed;
     this.angle = angle;
-    this.radians = this.angle * Math.PI / 180;
-    this.id = id;
-    this.type = type;
+    this.radians = angle * Math.PI / 180;
     this.height = 4;
     this.width = 30;
-    this.drawBullet = drawBullet;
     this.moveBullet = moveBullet;
 }
 
 function moveBullet() {
-    this.x = this.x + Math.cos(this.radians) * this.speed;
-    this.y = this.y + Math.sin(this.radians) * this.speed;
-    
-    arrow_flying = true;
-    
-    context.drawImage(bulletImg, this.x, this.y);
+    // Move bullet based on calculated angle
+    this.x += Math.cos(this.radians) * this.speed;
+    this.y += Math.sin(this.radians) * this.speed;
+
+    // Draw bullet based on angle
+    if (this.angle === 270) {
+        context.drawImage(bulletImg_north, this.x, this.y);
+    } else if (this.angle === 0) {
+        context.drawImage(bulletImg_east, this.x, this.y);
+    } else if (this.angle === 90) {
+        context.drawImage(bulletImg_south, this.x, this.y);
+    } else if (this.angle === 180) {
+        context.drawImage(bulletImg_west, this.x, this.y);
+    }
 }
 
-function drawBullet(unitX,unitY) {
-    var bullet = new newBullet(unitX, unitY, 10, getAngle(),2,1,1);
+function drawBullet(unitX, unitY, angle) {
+    let bullet = new newBullet(unitX, unitY, 10, angle);
     bullets.push(bullet);
-    setInterval(bullets[bullets.length - 1].moveBullet.bind(bullets[bullets.length -1]), 25);
-}
-
-function popBullet(index) {
-    bullets.splice(index,1);
+    setInterval(() => bullet.moveBullet(), 25);
 }
 
 function arrowHit() {
-    //player shoot arrow 
-    if(arrow_flying) {
-        for (let i = 0; i < bullets.length; i++) {
-            var arrow_index = Math.floor((bullets[i].y + scaled_size * 0.5) / scaled_size)
-         * columns + Math.floor((bullets[i].x + scaled_size * 0.5) /scaled_size);
+    if (arrow_flying) {
+        for (let i = bullets.length - 1; i >= 0; i--) {
+            let bullet = bullets[i];
+            let arrow_index = Math.floor((bullet.y + scaled_size * 0.5) / scaled_size) * columns + Math.floor((bullet.x + scaled_size * 0.5) / scaled_size);
 
-            if(bullets[i].x < width && !enemyHit && currentMap[arrow_index] != 3) {
-                context.drawImage(bulletImg, bullets[i].x, bullets[i].y-16)
+            if (bullet.x < 0 || bullet.x >= width || bullet.y < 0 || bullet.y >= height) {
+                popBullet(i);
+                continue;
             }
-            if(bullets[i].x >=width - 186) {
+
+            if (currentMap[arrow_index] != 3) {
+                context.drawImage(bulletImg, bullet.x, bullet.y - 16);
+            } else {
                 popBullet(i);
             }
-            if(isCollide(bullets[i],enemy) && !enemyHit) { //arrow hit enemy
+
+            if (isCollide(bullet, enemy) && !enemyHit) {
                 enemy.hp -= 5;
                 popBullet(i);
                 enemyHit = true;
+                continue;
             }
-            if(isCollide(bullets[i],enemy3) && !enemyHit) { //arrow hit enemy
+            if (isCollide(bullet, enemy3) && !enemyHit) {
                 enemy3.hp -= 5;
                 popBullet(i);
                 enemyHit = true;
+                continue;
             }
-           /*   if(isCollide(bullets[i],player)) { //arrow hit player
-                player.hp -= 5;
-                popBullet(i);
-            } */
-            else {
-                enemyHit = false;
-            }
+
+            enemyHit = false;
         }
     }
+}
+
+function popBullet(index) {
+    bullets.splice(index, 1);
 }
